@@ -23,4 +23,7 @@ angle = st.slider('カメラの角度', 0, 180, 90)
 if st.button('角度を設定'):
     set_servo(angle)
 
+if st.button('ページを更新'):
+    st.experimental_rerun()
+
 st.image(get_camera_image(), caption="Live Camera Feed")
