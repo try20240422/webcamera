@@ -15,13 +15,7 @@ def set_servo(angle):
     else:
         st.error('Failed to move the camera')
 
-def clear_cache():
-    url = f"http://{esp_ip}:{port}/clear_cache"
-    requests.get(url)
-
 def get_camera_image():
-    # キャッシュをクリア
-    clear_cache()
     # タイムスタンプを現在時刻に設定してURLに追加する
     timestamp = int(time.time())
     return f"http://{esp_ip}:{port}/capture?timestamp={timestamp}"
