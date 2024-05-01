@@ -1,7 +1,6 @@
 import streamlit as st
 import requests
 import time
-import random
 
 st.title('リモートカメラ制御')
 
@@ -16,12 +15,16 @@ def set_servo(angle):
     else:
         st.error('Failed to move the camera')
 
+def clear_cache():
+    url = f"http://{esp_ip}:{port}/clear_cache"
+    requests.get(url)
+
 def get_camera_image():
+    # キャッシュをクリア
+    clear_cache()
     # タイムスタンプを現在時刻に設定してURLに追加する
     timestamp = int(time.time())
-    # ランダムなパラメータを生成してURLに追加
-    random_param = random.randint(0, 100000)
-    return f"http://{esp_ip}:{port}/capture?timestamp={timestamp}&random={random_param}"
+    return f"http://{esp_ip}:{port}/capture?timestamp={timestamp}"
 
 angle = st.slider('カメラの角度', 0, 180, 90)
 if st.button('角度を設定'):
